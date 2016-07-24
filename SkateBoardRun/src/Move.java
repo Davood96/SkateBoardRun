@@ -1,7 +1,11 @@
 import java.util.Timer;
 import java.util.TimerTask;
 
-
+/**
+ * Base class for all types of player movement
+ * @author You're back!
+ *
+ */
 public abstract class Move extends TimerTask
 {
 		protected Character usr;
