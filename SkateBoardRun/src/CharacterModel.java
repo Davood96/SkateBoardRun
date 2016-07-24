@@ -65,32 +65,32 @@ public class CharacterModel
 		reset();
 		
 		try {
-			movingImg = ImageIO.read(new File("C://Users//You're back!//Desktop//Resources 2//moving.png"));
+			movingImg = ImageIO.read(new File("src//resources//moving.png"));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
 		try {
-			fallImg = ImageIO.read(new File("C://Users//You're back!//Desktop//Resources 2//falling_only.png"));
+			fallImg = ImageIO.read(new File("src//resources//falling_only.png"));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		try {
-			grindImg = ImageIO.read(new File("C://Users//You're back!//Desktop//Resources 2//grinding.png"));
+			grindImg = ImageIO.read(new File("src//resources//grinding.png"));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		try {
-			brickImg = ImageIO.read(new File("C://Users//You're back!//Desktop//Resources 2//brickTile.png"));
+			brickImg = ImageIO.read(new File("src//resources//brickTile.png"));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		try {
-			railImg = ImageIO.read(new File("C://Users//You're back!//Desktop//Resources 2//GrindRail.png"));
+			railImg = ImageIO.read(new File("src//resources//GrindRail.png"));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -110,7 +110,7 @@ public class CharacterModel
 		AudioInputStream audioIn = null; 
 		try {
 			audioIn = AudioSystem.getAudioInputStream(
-					new File("C://Users//You're back!//Desktop//Resources 2//jump.wav"));
+					new File("src//resources//jump.wav"));
 		} catch (UnsupportedAudioFileException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -138,7 +138,7 @@ public class CharacterModel
 		
 		try {
 			audioIn = AudioSystem.getAudioInputStream(
-					new File("C://Users//You're back!//Desktop//Resources 2//landingSound.wav"));
+					new File("src//resources//landingSound.wav"));
 		} catch (UnsupportedAudioFileException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -167,7 +167,7 @@ public class CharacterModel
 		
 		try {
 			audioIn = AudioSystem.getAudioInputStream(
-					new File("C://Users//You're back!//Desktop//Resources 2//movingSound.wav"));
+					new File("src//resources//movingSound.wav"));
 		} catch (UnsupportedAudioFileException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -195,7 +195,7 @@ public class CharacterModel
 		
 		try {
 			audioIn = AudioSystem.getAudioInputStream(
-					new File("C://Users//You're back!//Desktop//Resources 2//hit.wav"));
+					new File("src//resources//hit.wav"));
 		} catch (UnsupportedAudioFileException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -227,25 +227,25 @@ public class CharacterModel
 	private void loadCollisionImgs()
 	{
 		try {
-			collide1 = ImageIO.read(new File("C://Users//You're back!//Desktop//Resources 2//Collide1.png"));
+			collide1 = ImageIO.read(new File("src//resources//Collide1.png"));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		try {
-			collide2 = ImageIO.read(new File("C://Users//You're back!//Desktop//Resources 2//Collide2.png"));
+			collide2 = ImageIO.read(new File("src//resources//Collide2.png"));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		try {
-			collide3 = ImageIO.read(new File("C://Users//You're back!//Desktop//Resources 2//Collide3.png"));
+			collide3 = ImageIO.read(new File("src//resources//Collide3.png"));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		try {
-			collide4 = ImageIO.read(new File("C://Users//You're back!//Desktop//Resources 2//Collide4.png"));
+			collide4 = ImageIO.read(new File("src//resources//Collide4.png"));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -261,7 +261,7 @@ public class CharacterModel
 	private void loadTrickImgs()
 	{
 		try {
-			trickSheet = ImageIO.read(new File("C://Users//You're back!//Desktop//Resources 2//trick.png"));
+			trickSheet = ImageIO.read(new File("src//resources//trick.png"));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -275,7 +275,7 @@ public class CharacterModel
 	private void loadJumpImgs()
 	{
 		try {
-			jumpSheet = ImageIO.read(new File("C://Users//You're back!//Desktop//Resources 2//jumping_only.png"));
+			jumpSheet = ImageIO.read(new File("src//resources//jumping_only.png"));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
