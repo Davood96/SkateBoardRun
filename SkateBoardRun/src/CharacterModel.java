@@ -11,7 +11,12 @@ import javax.sound.sampled.Clip;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 
-
+/**
+ * This class represents the physical properties
+ * of a player
+ * @author You're back!
+ *
+ */
 public class CharacterModel 
 {
 	
@@ -286,9 +291,13 @@ public class CharacterModel
 		
 	}
 	
+	/**
+	 * Creates a new Jump task
+	 * @param player - the model object
+	 */
 	public void jump(CharacterModel player)
 	{
-		if((code == null) && running)
+		if(!falling && running)
 		{		
 			code = new Jump();
 			moving.stop();
@@ -298,13 +307,14 @@ public class CharacterModel
 		}
 	}
 	
+	/**
+	 * Creates a new Fall task
+	 */
 	public void fall()
 	{
-		if(code == null && running)
-		{
-			code = new Fall(floors);
-			code.move(this);
-		}
+		System.out.println("fall task new");
+		new Fall(floors).move(this);
+			
 	}
 	
 	public int getXpos()
@@ -417,17 +427,14 @@ public class CharacterModel
 	
 	public void checkGrind()
 	{
-		if(img == movingImg)
-		{
-			moving.start();
-			moving.loop(Clip.LOOP_CONTINUOUSLY);
-			return;
-		}
-			
+		
 		int yPosPlat = floors.get(currPlat).getHeight();
 		
-		if(yPosPlat != ground && Math.abs(yPos - ground) < 3){
-			img = grindImg; addGrind();}
+		if(yPosPlat != ground && Math.abs(yPos - ground) < 3)
+		{
+			img = grindImg; 
+			addGrind();
+		}
 		else
 		{
 			img = movingImg; 

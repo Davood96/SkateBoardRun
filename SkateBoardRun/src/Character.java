@@ -29,7 +29,9 @@ import java.awt.image.BufferedImage;
  */
 public class Character extends JPanel 
 {
+	//The left side of the rightmost platform
 	private int leftEnd;
+	
 	private int changeInGrowth;
 	protected ArrayList<Platform> floors = new ArrayList<Platform>();
 	protected ArrayList<Grind> grinds = new ArrayList<Grind>();
@@ -41,6 +43,7 @@ public class Character extends JPanel
 	
 	public Character()
 	{
+		//Done using WindowBuilder Interface
 		super();
 		GroupLayout groupLayout = new GroupLayout(this);
 		groupLayout.setHorizontalGroup(
@@ -100,27 +103,35 @@ public class Character extends JPanel
 		g.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 20));
 		g.translate(-cntrl.getxPos() , -cntrl.getyPos() + 320);
 	    
+		//Remove platform that goes off-screen
+		//This will always be the first object in the list
+		//if the starting conditions are set correctly
 		if(floors.get(0).rightSide() <= cntrl.getxPos() - 30)
 			floors.remove(0);
 		
-		if(!grinds.isEmpty() && grinds.get(0).rightSide() <= cntrl.getxPos() - 30)
+		//Remove grind that goes off-screen
+		if(grinds.get(0).rightSide() <= cntrl.getxPos() - 30)
 			grinds.remove(0);
 		
+		//generate new platform when
+		//right most platform appears on screen
 		if(leftEnd - cntrl.getxPos() < 600 )
 			generateNewPlat();
 		
 		Graphics2D g2d = (Graphics2D) g;
+		//Draw player
 		g2d.drawImage(cntrl.getImg(), cntrl.getxPos(), cntrl.getyPos(), 30, 40, null);
+		//Draw score
 		g.drawString(cntrl.getScore(), cntrl.getxPos() + 500, cntrl.getyPos() - 300);
 		
-		
+		//Draw grinds
 		for(int index = 0; index < grinds.size() && grinds.get(index).leftSide() - cntrl.getxPos() < 574 ; index++)
 		{
 			Grind h = grinds.get(index);
 			g2d.drawImage(cntrl.getRailImg(), h.leftSide() + 30, h.getHeight() + 40, h.rightSide() - h.leftSide() , 19, null);
 		}
 	
-		
+		//Draw platforms
 		for(int index = 0; index < floors.size() && floors.get(index).leftSide() - cntrl.getxPos() < 574; index++)
 		{
 			Platform p = floors.get(index);

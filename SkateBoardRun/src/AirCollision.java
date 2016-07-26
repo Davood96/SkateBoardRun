@@ -1,4 +1,8 @@
-
+/**
+ * This class implements mid-air, collision animations
+ * @author You're back!
+ *
+ */
 public class AirCollision extends AnimateCollision
 {
 
@@ -8,6 +12,9 @@ public class AirCollision extends AnimateCollision
 		
 	}
 
+	/**
+	 * Executes the animation
+	 */
 	@Override
 	public void run() 
 	{

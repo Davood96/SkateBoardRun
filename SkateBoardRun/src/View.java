@@ -178,7 +178,7 @@ public class View extends JFrame
 			int fps = 0;
 			double secs = 0;
 		
-			
+			cntrl.initateFall();
 			while(cntrl.getRunning())
 			{
 				long current = System.currentTimeMillis();
@@ -197,9 +197,6 @@ public class View extends JFrame
 					
 				}
 			
-				
-				cntrl.initateFall();
-				
 				try
 				{
 					Thread.sleep(System.currentTimeMillis()-lastLoopTime + OPTIMAL_TIME);

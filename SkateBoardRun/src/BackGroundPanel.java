@@ -7,7 +7,11 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
-
+/**
+ * This class implements the background on the gui
+ * @author You're back!
+ *
+ */
 public class BackGroundPanel extends JPanel 
 {
 

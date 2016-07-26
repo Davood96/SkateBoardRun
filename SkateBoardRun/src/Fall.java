@@ -34,6 +34,9 @@ public class Fall extends Movement
 		@Override
 		public void run() 
 		{
+			if(!usr.getRunning())
+				timer.cancel();
+			
 			int currPos = usr.getXpos();
 			boolean found = false;
 			int index = 0;
@@ -51,23 +54,19 @@ public class Fall extends Movement
 			int leftBound = floor.get(index).leftSide();
 			int rightBound = floor.get(index).rightSide();
 			usr.ground = usr.getGround(leftBound, rightBound, floor.get(index).getHeight());
-			
-			if(usr.yPos - usr.ground < 0)
+			usr.setFalling(usr.code == null && usr.yPos - usr.ground < 0);
+			boolean inactive = usr.code == null && !usr.isCollided();
+			if(usr.falling)
 			{
 				usr.yPos += 3;
 				usr.screenCapVert += 3;
-				usr.setFalling(true);
 				usr.setFallingImg();
-				
 			}
-			else
-			{
-				if(!usr.isCollided())
-					usr.checkGrind();
-				usr.setFalling(false);
-				usr.code = null;
-				timer.cancel();
-			} 
+			else if(inactive)
+				usr.checkGrind();
+			
+			
+			 
 		}
 		
 	}

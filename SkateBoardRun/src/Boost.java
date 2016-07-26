@@ -2,7 +2,8 @@ import java.awt.image.BufferedImage;
 import java.util.Timer;
 
 /**
- * Not implemeted yet
+ * This class provides the base for implementing
+ * pick-ups (e.g. Double points, Double speed)
  * @author You're back!
  *
  */
@@ -27,8 +28,15 @@ public abstract class Boost
 		return img[index];
 	}
 
+	/**
+	 * Changes state of the player
+	 * @param usr - the player
+	 */
 	public abstract void changeState(CharacterModel usr);
 
+	/**
+	 * Executes boost animation
+	 */
 	public void animate() 
 	{
 		frames++;
