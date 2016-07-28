@@ -1,18 +1,23 @@
 import java.util.Timer;
 import java.util.TimerTask;
 
-
-
+/**
+ * This class is responsible for player jumping
+ * @author You're back!
+ *
+ */
 public class Jump extends Movement
 {
-	int count;
 	int frame = 0;
-	
+	//Jumping range
+	private static final int RANGE = 65;
+	/**
+	 * Begin jumping thread
+	 */
 	@Override
 	public  void move(CharacterModel player) 
 	{
 		Timer t = new Timer();
-		count = 0;
 		Thread jmp = new Thread()
 		{
 			@Override
@@ -42,12 +47,12 @@ public class Jump extends Movement
 		@Override
 		public void run() 
 		{
-			if(ground - usr.getYpos() < 65)
+			if(ground - usr.getYpos() < RANGE)
 			{	
 				usr.yPos -= 3;
 				usr.screenCapVert -= 3;
-				if(frame % 7 == 0){
-					usr.animateJump(count);count = 1;}
+				int index = frame > 6 ? 1 : 0;
+				usr.animateJump(index);
 			}
 			else
 			{
@@ -60,11 +65,9 @@ public class Jump extends Movement
 		}
 		
 	}
-	
+
 			
-			
-		
-		
+				
 	
 
 }

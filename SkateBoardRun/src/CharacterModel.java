@@ -49,9 +49,11 @@ public class CharacterModel
 	private BufferedImage doublePointImg;
 	private BufferedImage[] jumpImgs = new BufferedImage[2]; 
 	private BufferedImage[] trickImgs = new BufferedImage[3]; 
+	
 	protected ArrayList<Platform> floors;
 	protected ArrayList<Grind> grinds;
 	protected ArrayList<Boost> boosts = new ArrayList<Boost>();
+	
 	protected boolean jumping = false;
 	protected boolean falling = false;
 	protected Movement code = null;
@@ -64,6 +66,9 @@ public class CharacterModel
 	Clip landing = null;
 	Clip moving = null;
 	Clip hitClip = null;
+	
+	private Fall gravity;
+	private Collision motion;
 	
 	public CharacterModel()
 	{
@@ -297,37 +302,55 @@ public class CharacterModel
 	 */
 	public void jump(CharacterModel player)
 	{
-		if(!falling && running)
+		if(!isAirborne() && running)
 		{		
 			code = new Jump();
 			moving.stop();
+			setJumping(true);
 			jump.setFramePosition(0);
 			jump.start();
 			code.move(this);
 		}
 	}
-	
+	/**
+	 * Returns whether the player is airborne or not
+	 * @return - true if airborne. false otherwise
+	 */
+	public boolean isAirborne() 
+	{
+		return falling || jumping;
+	}
+
 	/**
 	 * Creates a new Fall task
 	 */
 	public void fall()
 	{
 		System.out.println("fall task new");
-		new Fall(floors).move(this);
+		gravity = new Fall(floors);
+		gravity.move(this);
 			
 	}
-	
+	/**
+	 * Return the player's x position
+	 * @return - the player's x position
+	 */
 	public int getXpos()
 	{
 		return xPos;
 	}
-	
-	
+	/**
+	 * Set the jumping state of the player
+	 * @param var - the jumping state
+	 */
 	public void setJumping(boolean var)
 	{
 		jumping = var;
 	}
-	
+	/**
+	 * Set the running state of the game
+	 * @param var - the running state
+	 */
 	public void setRunning(boolean var)
 	{
 		running = var;
@@ -336,22 +359,26 @@ public class CharacterModel
 		{
 			collided = !running;
 			reset();
-			new Collision(this);
+			motion = new Collision(this);
 		}
 	}
-	
+	/**
+	 * Execute a trick sequence
+	 */
 	public void trick()
 	{
-		if( (falling || jumping) && tCode == null)
-			tCode = new Trick(this);
 		
-			
+		if(isAirborne() && tCode == null)
+			  tCode = new Trick(this);
 		
 		if(tCode != null)
 			tCode.increment();
 		
 	}
 	
+	/**
+	 * Reset the model to original state
+	 */
 	public void reset()
 	{
 		xPos = 128;
@@ -373,19 +400,29 @@ public class CharacterModel
 		screenCapVert = 489;
 	}
 	
-	
+	/**
+	 * Return the player's y position
+	 * @return - the player's y position
+	 */
 	public int getYpos()
 	{
 		return yPos;
 	}
-
+	/**
+	 * Returns the collided state of the player 
+	 * @return - the player's collided state
+	 */
 	public boolean isCollided() 
 	{
-		// TODO Auto-generated method stub
 		return collided;
 	}
-	
-
+	/**
+	 * Returns the player's relative ground
+	 * @param left - the left side of the platform directly beneath the player
+	 * @param right - the right side of the platform directly beneath the player
+	 * @param platY - the index of the platform directly beneath the player
+	 * @return the player's relative ground
+	 */
 	public int getGround(int left, int right, int platY) 
 	{
 		// TODO Auto-generated method stub
@@ -406,41 +443,61 @@ public class CharacterModel
 			return platY;
 		return grinds.get(index).getHeight();	
 	}
-
+	/**
+	 * Sets the image of the player to
+	 * a falling image
+	 * @precondition - the player has not collided nor is he mid-trick
+	 */
 	public void setFallingImg() 
 	{
-		if(tCode == null && !collided)
-			img = fallImg;
-		
+		img = tCode == null && !collided ? fallImg : img;
 	}
-	
+	/**
+	 * Sets the image of the player to a jumping image
+	 * @param index - the particular jumping image
+	 * @precondition - the player has not collided
+	 */
 	public void animateJump(int index)
 	{
-		if(tCode == null && !collided)
-			img = jumpImgs[index];
+		img = !collided ? jumpImgs[index] : img;
 	}
 
 	public void setFalling(boolean b) 
 	{
 		falling = b;
 	}
-	
+	/**
+	 * Executes grind sequence or landing sequence
+	 */
 	public void checkGrind()
 	{
-		
 		int yPosPlat = floors.get(currPlat).getHeight();
+		img = yPos < yPosPlat ? grindImg : movingImg;
+		int option = img.equals(grindImg) ? 1 : 0;
 		
-		if(yPosPlat != ground && Math.abs(yPos - ground) < 3)
+		switch(option)
 		{
-			img = grindImg; 
-			addGrind();
+			case 0:
+				startLanded();
+				break;
+			
+			case 1:
+				startGrind();
+				break;
 		}
-		else
-		{
-			img = movingImg; 
-			moving.stop();
-			playLandClip();
-		}
+		
+	}
+
+	//Grind sequence
+	private void startGrind() 
+	{
+		addGrind();
+		//Play grind sound
+		
+	}
+	//Landing sequence
+	private void startLanded() 
+	{
 		
 	}
 
@@ -449,7 +506,11 @@ public class CharacterModel
 		collided = b;
 		moving.stop();
 	}
-
+	/**
+	 * Creates copies of references for platforms and grinds lists
+	 * @param floors2 - the platform list
+	 * @param grinds2 - the grind list
+	 */
 	public void assignElements(ArrayList<Platform> floors2,
 			ArrayList<Grind> grinds2) 
 	{
@@ -457,7 +518,10 @@ public class CharacterModel
 		grinds = grinds2;
 		
 	}
-
+	/**
+	 * Sets the image of the player to a trick image
+	 * @param i - the particular trick image
+	 */
 	public void animateTrick(int i) 
 	{
 		img = trickImgs[i];
@@ -466,26 +530,31 @@ public class CharacterModel
 
 	public void setCollideImage(int i) 
 	{
-		if(i < collideImgs.length)
-			img = collideImgs[i];
+		img = collideImgs[i];
 	}
 	
 	public String getScore()
 	{
 		return "" + score;
 	}
-
+	/**
+	 * Adds default score
+	 */
 	public void addDefault() 
 	{
 		score += alivePoint;
 		minScore++;
 	}
-	
+	/**
+	 * Adds points for grinding
+	 */
 	public void addGrind()
 	{
 		score += grindPoint;
 	}
-	
+	/**
+	 * Adds points for executing a trick
+	 */
 	public void addTrick1()
 	{
 		score += trickPoint;
@@ -511,15 +580,22 @@ public class CharacterModel
 		return doublePointImg;
 	}
 
+	/**
+	 * Generates a new boost object every 2000 points
+	 * Removes an uncollected boost once player has passed
+	 */
 	public void generateBoost() 
 	{
+		//Generate
 		if(score % 2000 == 0)
 			boosts.add(new DoublePoint(xPos + 10 * 64, yPos - 64));	
-		
+		//Remove
 		if(!boosts.isEmpty() && boosts.get(0).x + 32 < xPos)
 			boosts.remove(0);
 	}
-
+	/**
+	 * Checks if player has collected a boost
+	 */
 	public void checkBoost() 
 	{
 		if(boosts.isEmpty())
@@ -551,6 +627,21 @@ public class CharacterModel
 	{
 		landing.setFramePosition(0);
 		landing.start();
+	}
+	/**
+	 * Terminates the gravity thread
+	 */
+	public void endGravity() 
+	{
+		gravity.terminate();
+	}
+	/**
+	 * Terminates the motion thread
+	 */
+	public void stopMotion() 
+	{
+		motion.terminate();
+		
 	}
 
 	

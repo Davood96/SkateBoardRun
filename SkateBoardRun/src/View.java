@@ -208,6 +208,7 @@ public class View extends JFrame
 				
 				player1.repaint();
 			}
+			cntrl.endGravity();
 			cntrl.checkScore();
 			cntrl.openRestartMenu(this);
 	

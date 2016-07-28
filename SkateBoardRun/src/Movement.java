@@ -1,6 +1,10 @@
 import java.util.Timer;
 
-
+/**
+ * Pretty useless. Will clean-up later
+ * @author You're back!
+ *
+ */
 public abstract class Movement 
 {
 	public static boolean state = false;

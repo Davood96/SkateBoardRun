@@ -1,4 +1,9 @@
-
+/**
+ * This class implements animation for 
+ * Trick collisions
+ * @author You're back!
+ *
+ */
 public class TrickCollision extends AnimateCollision
 {
 
@@ -11,21 +16,24 @@ public class TrickCollision extends AnimateCollision
 	@Override
 	public void run() 
 	{
-		if(frame % 6 == 0)
-			usr.setCollideImage(++count);
-			
-		System.out.println(count + " " + System.currentTimeMillis());
-			
-		if(count  > 2)
+		//Animation is 18 frames
+		
+		int index = frame++ / 6;
+		usr.setCollideImage(index);
+	
+		switch(index)
 		{
-			usr.setRunning(false);
-			usr.playHitClip();
-			t.stop();
+			case 3:
+				usr.setRunning(false);
+				usr.tCode = null;
+				t.stop();
+				
+			default:
+				usr.xPos += 1;
+
 		}
-		else
-			usr.xPos += 1;
-		//usr.repaint();
-		frame++;
+			
+		
 	}
 
 }

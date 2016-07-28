@@ -1,4 +1,8 @@
-
+/**
+ * This class stores data for grinds
+ * @author You're back!
+ *
+ */
 public class Grind extends Platform
 {
 

@@ -8,14 +8,20 @@ import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.LayoutStyle.ComponentPlacement;
 
-
+/**
+ * This class implements the Restart window
+ * Most of it done using WindowBuilder interface
+ * @author You're back!
+ *
+ */
 public class RestartWindow extends JFrame 
 {
+	
 	public RestartWindow(MenuController control)
 	{
 		super();
 		setSize(300,300);
-		this.setResizable(false);
+		setResizable(false);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		ButtonAdapter yes = new ButtonAdapter("Yes")
 		{

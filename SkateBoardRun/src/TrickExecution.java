@@ -3,7 +3,11 @@ import java.awt.event.ActionListener;
 
 import javax.swing.Timer;
 
-
+/**
+ * This class provides base for executing tricks
+ * @author You're back!
+ *
+ */
 public abstract class TrickExecution implements ActionListener 
 {
 
@@ -11,7 +15,7 @@ public abstract class TrickExecution implements ActionListener
 		//private MoveChild execution;
 		protected Timer t;
 		protected CharacterModel usr;
-		int count = -1;
+		int count = 0;
 		int frame = 0;
 		long before;
 		
@@ -22,14 +26,27 @@ public abstract class TrickExecution implements ActionListener
 			usr = player;
 			move();
 		}
-		
+		/**
+		 * Execute the trick
+		 */
 		public void move() 
 		{
 			System.out.println("Called start");
 			System.out.println(System.currentTimeMillis());
 			t.start();
 		}
+		/**
+		 * Terminate the trick thread
+		 */
+		public void terminate()
+		{
+			t.stop();
+			usr.tCode = null;
+		}
 		
+		/**
+		 * The trick execution.
+		 */
 		public abstract void run();
 		
 			/*if(Math.abs(usr.yPos - usr.ground) < 3)

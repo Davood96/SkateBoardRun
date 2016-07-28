@@ -1,4 +1,9 @@
-
+/**
+ * This class is responsible for carrying out
+ * ground collision animations
+ * @author You're back!
+ *
+ */
 public class GroundCollision extends AnimateCollision
 {
 
@@ -10,23 +15,23 @@ public class GroundCollision extends AnimateCollision
 	@Override
 	public void run() 
 	{
-		if(frame % 6 == 0)
-			usr.setCollideImage(++count);
-			
-		System.out.println(count + " " + System.currentTimeMillis());
-			
-		if(count  > 2)
+		//Animation runs for 18 frames
+		
+		
+		int index = frame++ / 6;
+		usr.setCollideImage(index);
+		
+		switch(index)
 		{
-			usr.setRunning(false);
-			//usr.playHitClip();
-			t.stop();
+			case 3:
+				t.stop();
+				usr.setRunning(false);
+				break;
+				
+			default:
+				usr.xPos -= 1;
 		}
-		else
-			usr.xPos -= 1;
-		
-		//usr.repaint();
-		frame++;
-		
+	
 	}
 
 }

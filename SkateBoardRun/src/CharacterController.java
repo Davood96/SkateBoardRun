@@ -36,10 +36,8 @@ public class CharacterController
 	public void initiateJump()
 	{
 		if(!model.isCollided())
-		{
-			model.setJumping(true);
 			model.jump(model);
-		}
+		
 	}
 	/**
 	 * Instruct the model to initiate its fall sequence
@@ -158,6 +156,11 @@ public class CharacterController
 	public BufferedImage getRailImg()
 	{
 		return model.getRail();
+	}
+	
+	public void endGravity()
+	{
+		model.endGravity();
 	}
 	
 	public BufferedImage getDoublePointImg()

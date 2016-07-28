@@ -19,15 +19,15 @@ public class AirCollision extends AnimateCollision
 	public void run() 
 	{
 		//New image set after 6 frames
-		if(frame % 6 == 0)
-			usr.setCollideImage(++count);
+		int index = frame / 6;
+		usr.setCollideImage(index < 4 ? index : 3);
 			
 		System.out.println(count + " Air Collision " + System.currentTimeMillis());
 		boolean grounded = 	usr.ground - usr.yPos < 3;
 		
 		//Task complete when animation completes
 		//and player is on ground
-		if(grounded && count > 2)
+		if(grounded && index > 2)
 		{
 			usr.setRunning(false);
 			usr.playHitClip();

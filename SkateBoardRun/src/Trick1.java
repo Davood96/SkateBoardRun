@@ -18,23 +18,26 @@ public class Trick1 extends TrickExecution
 	@Override
 	public void run() 
 	{
-		if(Math.abs(usr.yPos - usr.ground) < 3)
-			usr.setCollided(true);
-		else if(frame % 6 == 0)
-			usr.animateTrick(++count);
+		usr.setCollided(usr.ground - usr.yPos   < 3);
+		usr.animateTrick(frame / 6);
 		
-		System.out.println(count + " " + System.currentTimeMillis());
-		
-		if(count  > 1 || usr.isCollided())
+		int option = usr.isCollided() ? 0 : frame / 6 + 1;
+		System.out.println("Option = "  + option);
+		switch(option)
 		{
-			t.stop();
-			usr.tCode = null;
+			case 3:
+				usr.addTrick1();
+				terminate();
+				break;
+				
+			case 0:
+				terminate();
+				usr.stopMotion();
+				new TrickCollision(usr);
+				break;
+		
 		}
 		
-		if(usr.isCollided()){
-			new TrickCollision(usr);usr.playLandClip();}
-		else
-			usr.addTrick1();
 		
 		frame++;
 	}

@@ -3,7 +3,13 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.Timer;
-
+/**
+ * This class is responsible for detecting consecutive
+ * clicks, executing a new trick relative to said
+ * number of consecutive presses
+ * @author You're back!
+ *
+ */
 public class Trick implements ActionListener
 {
 	//private MoveChild execution;
@@ -20,14 +26,18 @@ public class Trick implements ActionListener
 		usr = player;
 		move();
 	}
-	
+	/**
+	 * Begin detection thread
+	 */
 	public void move() 
 	{
-		System.out.println("Called start");
-		System.out.println(System.currentTimeMillis());
+		//System.out.println("Called start");
+		//System.out.println(System.currentTimeMillis());
 		t.start();
 	}
-	
+	/**
+	 * The detection thread
+	 */
 	public void run() 
 	{
 		/*if(Math.abs(usr.yPos - usr.ground) < 3)
@@ -52,7 +62,7 @@ public class Trick implements ActionListener
 		}
 		
 	}
-
+	
 	public void increment()
 	{
 		count++;
@@ -63,5 +73,7 @@ public class Trick implements ActionListener
 	{
 		run();
 	}
+
+	
 }
 
