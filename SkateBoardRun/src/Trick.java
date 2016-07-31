@@ -24,6 +24,7 @@ public class Trick implements ActionListener
 		t = new Timer(18, this);
 		//execution = new MoveChild(player, player.xPos, t);
 		usr = player;
+		player.movingClip.stop();
 		move();
 	}
 	/**

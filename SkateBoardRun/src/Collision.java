@@ -90,7 +90,10 @@ public class Collision
 			usr.xPos += 2; 
 			usr.addDefault();
 			usr.screenCapHoriz+=2;
-			usr.checkBoost();
+			
+			if(!usr.boosts.isEmpty())
+				usr.checkBoost();
+			
 			usr.generateBoost();
 				
 				

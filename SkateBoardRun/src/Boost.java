@@ -27,6 +27,7 @@ public abstract class Boost
 	{
 		return img[index];
 	}
+	
 
 	/**
 	 * Changes state of the player

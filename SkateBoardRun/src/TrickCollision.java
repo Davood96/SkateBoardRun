@@ -1,3 +1,5 @@
+import java.awt.event.ActionEvent;
+
 /**
  * This class implements animation for 
  * Trick collisions
@@ -10,9 +12,16 @@ public class TrickCollision extends AnimateCollision
 	public TrickCollision(CharacterModel player) 
 	{
 		super(player);
-		// TODO Auto-generated constructor stub
 	}
-
+	
+	@Override
+	public void terminate()
+	{
+		t.stop();
+		usr.setRunning(false);
+		usr.tCode = null;
+	}
+	
 	@Override
 	public void run() 
 	{
@@ -24,9 +33,9 @@ public class TrickCollision extends AnimateCollision
 		switch(index)
 		{
 			case 3:
-				usr.setRunning(false);
-				usr.tCode = null;
-				t.stop();
+				usr.playHitClip();
+				terminate();
+				break;
 				
 			default:
 				usr.xPos += 1;

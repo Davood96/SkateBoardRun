@@ -48,6 +48,7 @@ public class Fall extends Movement
 		public void run() 
 		{
 			int currPos = usr.getXpos();
+			 
 			boolean found = false;
 			int index = 0;
 			
@@ -62,10 +63,11 @@ public class Fall extends Movement
 					
 			}
 			
+			int platY = floor.get(index).getHeight();
 			usr.currPlat = index;
 			int leftBound = floor.get(index).leftSide();
 			int rightBound = floor.get(index).rightSide();
-			usr.ground = usr.getGround(leftBound, rightBound, floor.get(index).getHeight());
+			usr.ground = usr.getGround(leftBound, rightBound, platY);
 			usr.setFalling(!usr.jumping && usr.yPos - usr.ground < 0);
 			
 			if(usr.falling)
@@ -73,11 +75,8 @@ public class Fall extends Movement
 				usr.yPos += 3;
 				usr.screenCapVert += 3;
 				usr.setFallingImg();
+				usr.movingClip.stop();
 			}
-			//Start land or grind sequence if
-			//not airborne nor collided
-			else if(!usr.isAirborne() && !usr.isCollided())
-				usr.checkGrind();
 		}
 		
 	}

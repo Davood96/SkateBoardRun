@@ -10,6 +10,12 @@ public class Grind extends Platform
 	{
 		super(x1, x2, height);
 	}
+
+	public int getLength() 
+	{
+		// TODO Auto-generated method stub
+		return rightSide() - leftSide();
+	}
 	
 
 }

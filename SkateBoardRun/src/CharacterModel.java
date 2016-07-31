@@ -64,7 +64,7 @@ public class CharacterModel
 	
 	Clip jump = null;
 	Clip landing = null;
-	Clip moving = null;
+	Clip movingClip = null;
 	Clip hitClip = null;
 	
 	private Fall gravity;
@@ -187,14 +187,14 @@ public class CharacterModel
 		}
 		
 		try {
-			moving = AudioSystem.getClip();
+			movingClip = AudioSystem.getClip();
 		} catch (LineUnavailableException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
 		try {
-			moving.open(audioIn);
+			movingClip.open(audioIn);
 		} catch (LineUnavailableException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -305,7 +305,7 @@ public class CharacterModel
 		if(!isAirborne() && running)
 		{		
 			code = new Jump();
-			moving.stop();
+			movingClip.stop();
 			setJumping(true);
 			jump.setFramePosition(0);
 			jump.start();
@@ -318,7 +318,7 @@ public class CharacterModel
 	 */
 	public boolean isAirborne() 
 	{
-		return falling || jumping;
+		return yPos - ground < 0;
 	}
 
 	/**
@@ -360,6 +360,7 @@ public class CharacterModel
 			collided = !running;
 			reset();
 			motion = new Collision(this);
+			playMovingClip();
 		}
 	}
 	/**
@@ -368,7 +369,7 @@ public class CharacterModel
 	public void trick()
 	{
 		
-		if(isAirborne() && tCode == null)
+		if(isAirborne() && tCode == null && !collided)
 			  tCode = new Trick(this);
 		
 		if(tCode != null)
@@ -387,9 +388,12 @@ public class CharacterModel
 		minScore = 0;
 		offset = 2;
 		score = 0;
-		running = true;
+		
 		currPlat = 0;
 		img =  movingImg;
+		
+		setFalling(false);
+		running = true;
 		
 		alivePoint = 2;
 		trickPoint = 2;
@@ -433,8 +437,8 @@ public class CharacterModel
 			int leftPos = grinds.get(i).leftSide();
 			int rightPos = grinds.get(i).rightSide();
 			
-			if(leftPos >= left && rightPos <= right && xPos >= leftPos)
-				exists = true;
+			exists = (leftPos >= left && rightPos <= right && xPos >= leftPos);
+				 
 			
 			index = i;
 		}
@@ -464,6 +468,11 @@ public class CharacterModel
 
 	public void setFalling(boolean b) 
 	{
+		boolean landed = !b && falling;
+		
+		if(landed)
+			checkGrind();
+		
 		falling = b;
 	}
 	/**
@@ -472,39 +481,58 @@ public class CharacterModel
 	public void checkGrind()
 	{
 		int yPosPlat = floors.get(currPlat).getHeight();
-		img = yPos < yPosPlat ? grindImg : movingImg;
-		int option = img.equals(grindImg) ? 1 : 0;
+		int option =  yPosPlat != ground ? 0 : 1;
 		
 		switch(option)
 		{
 			case 0:
-				startLanded();
+				startGrind(ground);
 				break;
 			
 			case 1:
-				startGrind();
+				startLanded();
 				break;
 		}
 		
 	}
 
 	//Grind sequence
-	private void startGrind() 
+	private void startGrind(int grindHeight) 
 	{
-		addGrind();
-		//Play grind sound
-		
+		img = grindImg;
+		//Play grind sound on loop
+		while(yPos < grindHeight )
+		{
+			addGrind();
+			System.out.println("grind");
+		}
+		//End grind playback
 	}
 	//Landing sequence
 	private void startLanded() 
 	{
+		if(running)
+		{
+			img = movingImg;
+			playLandClip();
+		}
+		
+		if(!collided)
+			playMovingClip();
+		
+	}
+
+	private void playMovingClip() 
+	{
+		movingClip.setFramePosition(0);
+		movingClip.loop(Clip.LOOP_CONTINUOUSLY);
 		
 	}
 
 	public void setCollided(boolean b)
 	{
 		collided = b;
-		moving.stop();
+		//movingClip.stop();
 	}
 	/**
 	 * Creates copies of references for platforms and grinds lists
@@ -597,18 +625,21 @@ public class CharacterModel
 	 * Checks if player has collected a boost
 	 */
 	public void checkBoost() 
-	{
-		if(boosts.isEmpty())
-			return;
-		
+	{ 
 		Boost first = boosts.get(0);
-		if(first.x  - xPos - 30 < 1 && yPos - first.y < 28 )
+			
+		if(inBoostRange(first))
 		{
 			System.out.println("Boost collected");
-			boosts.remove(0);
+			boosts.remove(first);
 			first.changeState(this);
 		}
 		
+	}
+	
+	private boolean inBoostRange(Boost boost)
+	{
+		return boost.x  - xPos - 30 < 1 && yPos - boost.y < 28;
 	}
 
 	public BufferedImage getBoostImg(Boost b) 
