@@ -8,8 +8,11 @@ import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.Scanner;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.imageio.ImageIO;
 import javax.swing.JLabel;
@@ -38,6 +41,7 @@ public class Character extends JPanel
 	private CharacterController cntrl;
 	private int highScore = 0;
 	private int[] scores = new int[3];
+	private String[] names = new String[3];
 	FileInputStream fileIn = null;
 	
 	
@@ -58,7 +62,7 @@ public class Character extends JPanel
 		setVisible(true);
 		
 		try {
-			fileIn = new FileInputStream("C://Users//You're back!//Desktop//Resources 2//Scores.txt");
+			fileIn = new FileInputStream("src//Resources//Scores.txt");
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -71,8 +75,17 @@ public class Character extends JPanel
 	{
 		Scanner scanner = new Scanner(fileIn);
 		int i = 0;
+		Pattern pattern = Pattern.compile("([a-zA-Z]+)(\\s+)([0-9]+)");
+		
 		while(scanner.hasNextLine())
-			scores[i++] = Integer.parseInt(scanner.nextLine());
+		{
+			String text = scanner.nextLine();
+			Matcher match = pattern.matcher(text);
+			match.matches();
+			names[i] = match.group(1);
+			scores[i++] = Integer.parseInt(match.group(3));
+		}
+			
 		try {
 			fileIn.close();
 		} catch (IOException e) {
@@ -196,6 +209,7 @@ public class Character extends JPanel
 		// TODO Auto-generated method stub
 		return highScore;
 	}
+	
 
 	/**
 	 * Updates the scores of the level
@@ -216,7 +230,7 @@ public class Character extends JPanel
 			}
 		}
 		
-		FileWriter fw = new FileWriter("C://Users//You're back!//Desktop//Resources 2//Scores.txt");
+		FileWriter fw = new FileWriter("src//Resources//Scores.txt");
 		 
 		for (int i = 0; i < 3; i++) 
 		{
@@ -250,5 +264,17 @@ public class Character extends JPanel
 	private int generateRandomOffset()
 	{
 		return (cntrl.getyPos() % 2) + 1;
+	}
+
+	public int[] getScores() 
+	{
+		int[] copy = Arrays.copyOf(scores, scores.length);
+		return copy;
+	}
+
+	public String[] getNames() 
+	{
+		// TODO Auto-generated method stub
+		return Arrays.copyOf(names, names.length);
 	}
 }

@@ -213,6 +213,16 @@ public class CharacterController
 		return model.getBoostImg(b);
 	}
 
+	public int[] getScores() 
+	{
+		return player.getScores();
+	}
+
+	public String[] getNames() 
+	{
+		// TODO Auto-generated method stub
+		return player.getNames();
+	}
 
 
 }

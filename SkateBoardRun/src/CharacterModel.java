@@ -483,6 +483,11 @@ public class CharacterModel
 		int yPosPlat = floors.get(currPlat).getHeight();
 		int option =  yPosPlat != ground ? 0 : 1;
 		
+		if(!running)
+			option += 2;
+		
+		System.out.println(option);
+		
 		switch(option)
 		{
 			case 0:
@@ -499,6 +504,7 @@ public class CharacterModel
 	//Grind sequence
 	private void startGrind(int grindHeight) 
 	{
+		
 		img = grindImg;
 		//Play grind sound on loop
 		while(yPos < grindHeight )
@@ -511,11 +517,9 @@ public class CharacterModel
 	//Landing sequence
 	private void startLanded() 
 	{
-		if(running)
-		{
-			img = movingImg;
-			playLandClip();
-		}
+		
+		img = movingImg;
+		playLandClip();
 		
 		if(!collided)
 			playMovingClip();

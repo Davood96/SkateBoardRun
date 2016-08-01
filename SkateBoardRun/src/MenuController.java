@@ -18,7 +18,8 @@ public class MenuController
 	public MenuController(View view)
 	{
 		level_view = view;
-		restart_view = new RestartWindow(this);
+		restart_view = new RestartWindow(this, level_view.getPlayerScore(), 
+				level_view.getScores(), level_view.getNames());
 	}
 	
 	/**

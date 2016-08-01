@@ -23,6 +23,7 @@ import java.awt.Panel;
 import java.awt.event.ActionEvent;
 
 import javax.swing.JLayeredPane;
+
 import java.awt.Label;
 
 
@@ -220,5 +221,25 @@ public class View extends JFrame
 		cntrl.reset();
 		player1.repaint();
 		start.setVisible(true);
+	}
+
+
+	public int getPlayerScore() 
+	{
+		return cntrl.getNumericScor();
+	}
+
+
+	public int[] getScores()
+	{
+		// TODO Auto-generated method stub
+		return cntrl.getScores();
+	}
+
+
+	public String[] getNames() 
+	{
+		// TODO Auto-generated method stub
+		return cntrl.getNames();
 	}
 }
