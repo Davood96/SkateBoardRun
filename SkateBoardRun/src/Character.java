@@ -16,6 +16,7 @@ import java.util.regex.Pattern;
 
 import javax.imageio.ImageIO;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
@@ -76,7 +77,7 @@ public class Character extends JPanel
 		Scanner scanner = new Scanner(fileIn);
 		int i = 0;
 		Pattern pattern = Pattern.compile("([a-zA-Z]+)(\\s+)([0-9]+)");
-		
+		//System.out.print("hi" + scanner.nextLine());
 		while(scanner.hasNextLine())
 		{
 			String text = scanner.nextLine();
@@ -85,6 +86,8 @@ public class Character extends JPanel
 			names[i] = match.group(1);
 			scores[i++] = Integer.parseInt(match.group(3));
 		}
+		
+		highScore = scores[0];
 			
 		try {
 			fileIn.close();
@@ -218,15 +221,20 @@ public class Character extends JPanel
 	 */
 	public void updateScores(int newScore) throws IOException 
 	{
-		int currScore = Integer.parseInt(cntrl.getScore());
-		
+		String name = JOptionPane.showInputDialog(this, "New HighScore! Enter name below");
+		if(name == null)
+			name = "Voldemort";
 		for(int i = 0; i < scores.length;i++)
 		{
-			int tmp = scores[i];
-			if(currScore > tmp)
+			int tmpScore = scores[i];
+			String tmpName = names[i];
+			if(newScore > tmpScore)
 			{
-				scores[i] = currScore;
-				currScore = tmp;
+				scores[i] = newScore;
+				newScore = tmpScore;
+				
+				names[i] = name;
+				name = tmpName;
 			}
 		}
 		
@@ -234,7 +242,7 @@ public class Character extends JPanel
 		 
 		for (int i = 0; i < 3; i++) 
 		{
-			fw.write("" + scores[i]);
+			fw.write(names[i] + " " +  scores[i]);
 			fw.write(System.lineSeparator());
 		}
 	 
@@ -276,5 +284,11 @@ public class Character extends JPanel
 	{
 		// TODO Auto-generated method stub
 		return Arrays.copyOf(names, names.length);
+	}
+
+	public int lowestScore() 
+	{
+		// TODO Auto-generated method stub
+		return scores[scores.length - 1];
 	}
 }

@@ -110,7 +110,8 @@ public class CharacterController
 	 */
 	public void checkScore() 
 	{
-		if(model.score > player.getScore());
+		if(model.score > player.lowestScore())
+		{
 			try {
 				player.updateScores(model.score);
 			} catch (IOException e) {
@@ -118,6 +119,7 @@ public class CharacterController
 				System.out.println("error");
 				e.printStackTrace();
 			}
+		}
 		
 	}
 	

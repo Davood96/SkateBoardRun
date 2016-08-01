@@ -166,7 +166,7 @@ public class View extends JFrame
 		buttons.setLayout(gl_buttons);
 		setResizable(false);
 		setVisible(true);
-		
+		setLocationRelativeTo(null);
 	}
 	
 
