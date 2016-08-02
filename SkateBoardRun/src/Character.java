@@ -226,19 +226,17 @@ public class Character extends JPanel
 			name = "Nameless";
 		
 		boolean replace = false;
-		int index = 0;
+		int index = -1;
 		
-		for(int i = 0; i < scores.length && !replace; i++)
+		while(!replace)
 		{
-			int tmpScore = scores[i];
-			index = i;
+			int tmpScore = scores[++index];
 			replace = newScore > tmpScore;
 		}
 		
-		if(replace)
+		
+		for(int j = index; j < scores.length; j++)
 		{
-			for(int j = index; j < scores.length; j++)
-			{
 				int tmpScore = scores[j];
 				String tmpName = names[j];
 				
@@ -247,9 +245,9 @@ public class Character extends JPanel
 				
 				newScore = tmpScore;
 				name = tmpName;
-			}
-			
 		}
+			
+		
 		
 		FileWriter fw = new FileWriter("src//Resources//Scores.txt");
 		 
