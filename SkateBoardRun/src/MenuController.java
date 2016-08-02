@@ -7,7 +7,7 @@
 public class MenuController 
 {
 
-	private static View level_view;
+	private  View level_view;
 	private  RestartWindow restart_view;
 	
 	/**
@@ -19,9 +19,7 @@ public class MenuController
 	{
 		level_view = view;
 		restart_view = new RestartWindow(this); 
-		restart_view.updateView(level_view.getPlayerScore(), 
-				level_view.getScores(),level_view.getNames());		
-				
+		
 	}
 	
 	/**
@@ -46,9 +44,10 @@ public class MenuController
 	{
 		restart_view.setLocationRelativeTo(level_view);
 		restart_view.setVisible(true);
-		restart_view.updateView(level_view.getPlayerScore(), 
-				level_view.getScores(),level_view.getNames());
+		restart_view.updateScore(level_view.getPlayerScore());
+		restart_view.updateList(level_view.getScores(), level_view.getNames());
 	}
+	
 	
 	
 }

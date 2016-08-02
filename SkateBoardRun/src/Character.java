@@ -223,19 +223,32 @@ public class Character extends JPanel
 	{
 		String name = JOptionPane.showInputDialog(this, "New HighScore! Enter name below");
 		if(name == null)
-			name = "Voldemort";
-		for(int i = 0; i < scores.length;i++)
+			name = "Nameless";
+		
+		boolean replace = false;
+		int index = 0;
+		
+		for(int i = 0; i < scores.length && !replace; i++)
 		{
 			int tmpScore = scores[i];
-			String tmpName = names[i];
-			if(newScore > tmpScore)
+			index = i;
+			replace = newScore > tmpScore;
+		}
+		
+		if(replace)
+		{
+			for(int j = index; j < scores.length; j++)
 			{
-				scores[i] = newScore;
-				newScore = tmpScore;
+				int tmpScore = scores[j];
+				String tmpName = names[j];
 				
-				names[i] = name;
+				scores[j] = newScore;
+				names[j] = name;
+				
+				newScore = tmpScore;
 				name = tmpName;
 			}
+			
 		}
 		
 		FileWriter fw = new FileWriter("src//Resources//Scores.txt");

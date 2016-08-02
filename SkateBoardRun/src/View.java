@@ -34,6 +34,7 @@ public class View extends JFrame
 	public static final int HEIGHT = 600;
 	private Character player1;
 	private CharacterController cntrl;
+	private MenuController menu_cntrl;
 	private JPanel buttons = new JPanel();
 	private ButtonAdapter start;
 	
@@ -74,6 +75,7 @@ public class View extends JFrame
 		player1 = new Character();
 		player1.setOpaque(false);
 		cntrl = new CharacterController(player1);
+		menu_cntrl = new MenuController(this);
 		player1.setControl(cntrl);
 		GroupLayout gl_player1 = new GroupLayout(player1);
 		gl_player1.setHorizontalGroup(
@@ -209,9 +211,9 @@ public class View extends JFrame
 				
 				player1.repaint();
 			}
-			cntrl.endGravity();
 			cntrl.checkScore();
-			cntrl.openRestartMenu(this);
+			cntrl.endGravity();
+			menu_cntrl.popUp();
 	
   }
 	

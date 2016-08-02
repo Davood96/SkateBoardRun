@@ -17,8 +17,6 @@ public class CharacterController
 	
 	private Character player;
 	private CharacterModel model;
-	private static MenuController menu_cntrl = null;
-	
 	
 	public CharacterController(Character user)
 	{
@@ -114,25 +112,15 @@ public class CharacterController
 		{
 			try {
 				player.updateScores(model.score);
+				
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				System.out.println("error");
 				e.printStackTrace();
 			}
+	
 		}
 		
-	}
-	
-	/**
-	 * Instructs the restart menu to pop-up
-	 * @param view - the main gui
-	 */
-	public void openRestartMenu(View view)
-	{
-		if(menu_cntrl == null)
-			menu_cntrl = new MenuController(view);
-		
-		menu_cntrl.popUp();
 	}
 
 	/**
